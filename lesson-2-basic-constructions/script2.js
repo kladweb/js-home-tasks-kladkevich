@@ -32,7 +32,7 @@ var futureYears = fullYears + 5;
 gender = (gender) ? 'мужской' : 'женский';
 pension = (pension) ? 'да' : 'нет';
 
-var finalMessage = 'ваше ФИО: ' + fullName + '\n' +
+var finalMessage = 'Ваше ФИО: ' + fullName + '\n' +
   'Ваш возраст в годах: ' + fullYears + '\n' +
   'Ваш возраст в днях: ' + ageInDays + '\n' +
   'Через 5 лет вам будет: ' + futureYears + '\n' +
