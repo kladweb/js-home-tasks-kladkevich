@@ -2,19 +2,19 @@ var incorrect = '';
 
 do {
   var lastName = prompt(incorrect + 'Введите Вашу фамилию:', '');
-} while (checkFio(lastName) === false);
+} while (checkFio(lastName) !== '');
 
 do {
   var firstName = prompt(incorrect + 'Введите Вашe имя:', '');
-} while (checkFio(firstName) === false);
+} while (checkFio(firstName) !== '');
 
 do {
   var secondName = prompt(incorrect + 'Введите Ваше отчество:', '');
-} while (checkFio(secondName) === false);
+} while (checkFio(secondName) !== '');
 
 do {
   var fullYears = parseInt(prompt(incorrect + 'Сколько Вам лет? ', ''), 10);
-} while (checkFullYears(fullYears) === false);
+} while (checkFullYears(fullYears) !== '');
 
 var gender = confirm('Ваш пол - мужской?');
 var pension = false;
@@ -44,17 +44,17 @@ alert(finalMessage);
 function checkFio(fio) {
   if (fio === null || fio === '') {
     incorrect = 'Некорректный ввод! ';
-    return false;
+  } else {
+    incorrect = '';
   }
-  incorrect = '';
-  return true;
+  return incorrect;
 }
 
 function checkFullYears(years) {
   if (isNaN(years) || years <= 0 || years > 122) {
     incorrect = 'Введите, пожалуйста, корректный возраст! ';
-    return false;
+  } else {
+    incorrect = '';
   }
-  incorrect = '';
-  return true;
+  return incorrect;
 }
