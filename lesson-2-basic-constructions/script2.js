@@ -1,19 +1,23 @@
 var incorrect = '';
+var lastName;
+var firstName;
+var secondName;
+var fullYears;
 
 do {
-  var lastName = prompt(incorrect + 'Введите Вашу фамилию:', '');
+  lastName = prompt(incorrect + 'Введите Вашу фамилию:', '');
 } while (checkFio(lastName) !== '');
 
 do {
-  var firstName = prompt(incorrect + 'Введите Вашe имя:', '');
+  firstName = prompt(incorrect + 'Введите Ваше имя:', '');
 } while (checkFio(firstName) !== '');
 
 do {
-  var secondName = prompt(incorrect + 'Введите Ваше отчество:', '');
+  secondName = prompt(incorrect + 'Введите Ваше отчество:', '');
 } while (checkFio(secondName) !== '');
 
 do {
-  var fullYears = parseInt(prompt(incorrect + 'Сколько Вам лет? ', ''), 10);
+  fullYears = parseInt(prompt(incorrect + 'Сколько Вам лет? ', ''), 10);
 } while (checkFullYears(fullYears) !== '');
 
 var gender = confirm('Ваш пол - мужской?');
