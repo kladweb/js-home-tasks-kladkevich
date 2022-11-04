@@ -1,3 +1,4 @@
+'use strict';
 var digits = [];
 var digit;
 var i = 0;
