@@ -56,17 +56,17 @@ function averageTip(client) {
   for (var i = 0; i < client.tips.length; i++) {
     tipSum += client.tips[i];
   }
-  return tipSum / client.tips.length;
+  return tipSum / client.tips.length; //среднее значение чаевых
 }
 
 var avarageJohn = averageTip(john);
 var avarageMark = averageTip(mark);
 console.log('---------------------------------------');
 if (avarageJohn > avarageMark) {
-  console.log(john.name + '\'s family paid the highest tips on average of $' + avarageJohn);
+  console.log(`${john.name}\'s family paid the highest tips on average of $${avarageJohn}`);
 } else if (avarageJohn < avarageMark) {
-  console.log(mark.name + '\'s family paid the highest tips on average of $' + avarageMark);
+  console.log(`${mark.name}\'s family paid the highest tips on average of $${avarageMark}`);
 } else {
-  console.log(`Families ${mark.name}\s and ${mark.name}\s paid the same tips on average of $${avarageJohn}`);
+  console.log(`Families ${john.name}\'s and ${mark.name}\'s paid the same tips on average of $${avarageJohn}`);
 }
 console.log('---------------------------------------');
