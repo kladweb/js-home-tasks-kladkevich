@@ -32,8 +32,8 @@ function questionsGit() {
     }
   };
 
-  Question.prototype.checkAnswer = function () {
-    if (numAnswer === this.correct) {
+  Question.prototype.checkAnswer = function (optionAnswer) {
+    if (optionAnswer === this.correct) {
       console.log('ВЕРНО !');
     } else {
       console.log('НЕ ВЕРНО !');
@@ -44,7 +44,7 @@ function questionsGit() {
   test[numberTest].askQuestion();
 
   var numAnswer = Number(prompt('Введите номер правильного ответа на вопрос, заданный в консоли:'));
-  test[numberTest].checkAnswer();
+  test[numberTest].checkAnswer(numAnswer);
 }
 
 questionsGit();
