@@ -1,6 +1,6 @@
 'use strict';
 
-function questionsGit() {
+(function () {
   var Question = function (question, answers, correct) {
     this.question = question;
     this.answers = answers;
@@ -45,6 +45,4 @@ function questionsGit() {
 
   var numAnswer = Number(prompt('Введите номер правильного ответа на вопрос, заданный в консоли:'));
   test[numberTest].checkAnswer(numAnswer);
-}
-
-questionsGit();
+})();
