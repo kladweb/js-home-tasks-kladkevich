@@ -7,6 +7,7 @@ function isPal(string) {
 console.log(isPal('А роза упала на лапу Азора'));
 
 // Первоначальный вариант
+
 // function isPal(string) {
 //   var oldString = '';
 //   var newString = '';
