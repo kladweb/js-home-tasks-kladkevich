@@ -44,19 +44,23 @@
     2);
 
   var questions = [q1, q2, q3];
+  var n;
+  var answerInput = '';
+  var answer = '';
 
   function askQuestion() {
-    var n = Math.floor(Math.random() * questions.length);
+    n = Math.floor(Math.random() * questions.length);
     questions[n].displayQuestion();
-    var answerInput = ((prompt('Please select the correct answer.  Enter "exit" to end the game.')) || '');
+    answerInput = ((prompt('Please select the correct answer.  Enter "exit" to end the game.')) || '');
+    answerInput = answerInput.toLowerCase();
     if (answerInput === 'exit') {
       return;
     }
-    var answer = parseInt(answerInput);
+    answer = parseInt(answerInput);
     questions[n].checkAnswer(answer);
     askQuestion();
   }
 
   askQuestion();
-  questions[1].displayResult();
+  questions[0].displayResult();
 })();
