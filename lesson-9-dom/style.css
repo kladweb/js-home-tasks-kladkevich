@@ -1,0 +1,116 @@
+body {
+  background: #e0e5ec;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+}
+
+h1 {
+  position: relative;
+  text-align: center;
+  color: #353535;
+  font-size: 3rem;
+}
+
+p {
+  margin-bottom: 4rem;
+  font-weight: 300;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #676767;
+}
+
+.custom-btn {
+  display: block;
+  position: relative;
+  margin: 2rem auto;
+  padding: 0.6rem 1.5rem;
+  min-width: 20rem;
+  height: 3rem;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 0.125rem 0.125rem 0.125rem 0px rgba(255, 255, 255, .5),
+  0.44rem 0.44rem 1.25rem 0 rgba(0, 0, 0, .1),
+  0.25rem 0.25rem 0.31rem 0 rgba(0, 0, 0, .1);
+  outline: none;
+  z-index: 1;
+}
+
+.custom-btn:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+  box-shadow: -0.44rem -0.44rem 1.25rem 0 #fff9,
+  -0.25rem -0.25rem 0.31rem 0 #fff9,
+  0.44rem 0.44rem 1.25rem 0 #0002,
+  0.25rem 0.25rem 0.31rem 0 #0001;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  color: #fff;
+}
+
+.custom-btn:hover:after {
+  top: 0;
+  height: 100%;
+}
+
+.custom-btn:active {
+  top: 2px;
+  box-shadow: -0.34rem -0.34rem 1.25rem 0 #fff9,
+  -0.15rem -0.15rem 0.31rem 0 #fff9,
+  0.24rem 0.24rem 0.2rem 0 #0002,
+  0.05rem 0.05rem 0.11rem 0 #0001;
+}
+
+.btn-enter {
+  background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+}
+
+.btn-enter:after {
+  background-color: #4dccc6;
+  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+}
+
+.btn-get {
+  background: #00ACEEFF;
+  background: linear-gradient(315deg, #00ACEEFF 0%, #027EFBFF 74%);
+}
+
+.btn-get:after {
+  background: #2C8EFFFF;
+  background: linear-gradient(315deg, #2C8EFFFF 0%, #76C8EBFF 74%);
+}
+
+.btn-del {
+  background-color: #ff5c46;
+  background-image: linear-gradient(315deg, #ff5c46 0%, #ff1b00 74%);
+}
+
+.btn-del:after {
+  background-color: #FF5543FF;
+  background-image: linear-gradient(315deg, #FF5543FF 0%, #FF9D90FF 74%);
+}
+
+.btn-list {
+  background-color: #FFBC83FF;
+  background-image: linear-gradient(315deg, #FFBC83FF 0%, #FF9700FF 74%);
+}
+
+.btn-list:after {
+  background-color: #FFAF3DFF;
+  background-image: linear-gradient(315deg, #FFAF3DFF 0%, #FFBC83FF 74%);
+}
