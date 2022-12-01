@@ -96,8 +96,7 @@
           return;
         }
         name = nameProcessing(name);
-        var drinkInfo = drinkStorage.deleteValue(name);
-        if (drinkInfo) {
+        if (drinkStorage.deleteValue(name)) {
           contElem.innerHTML = `Информация о напитке <span> \"${name}\" </span> удалена!`;
         } else {
           contElem.textContent = `Такого напитка пока нет в хранилище.`;
