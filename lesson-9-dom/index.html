@@ -57,7 +57,7 @@
         }
         var drinkInfo = [isAlco, recipe];
         drinkStorage.addValue(name, drinkInfo);
-        contElem.innerHTML = 'Данные о напитке <span>\"' + name + '\" <span> записаны!';
+        contElem.innerHTML = 'Данные о напитке <span>\"' + name + '\" <\span> записаны!';
       }
 
       function getDrink() {
@@ -77,7 +77,7 @@
           contElem.innerHTML = 'Такого напитка пока нет в хранилище.';
         } else {
           drinkInfoViev = '<p>Напиток:  <span>' + name + '</span><br>' +
-            'Алкогольтый:  <span>' + (drinkInfo[0] ? 'да' : 'нет') + '</span><br>' +
+            'Алкогольный:  <span>' + (drinkInfo[0] ? 'да' : 'нет') + '</span><br>' +
             'Рецепт приготовления:  <span>' + drinkInfo[1] + '</span></p>';
           contElem.innerHTML = drinkInfoViev;
         }
