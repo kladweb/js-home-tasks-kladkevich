@@ -13,7 +13,7 @@ h1 {
   font-size: 3rem;
 }
 
-p {
+.hello {
   margin-bottom: 4rem;
   font-weight: 300;
   text-align: center;
@@ -26,7 +26,7 @@ p {
   position: relative;
   margin: 2rem auto;
   padding: 0.6rem 1.5rem;
-  min-width: 20rem;
+  width: 20rem;
   height: 3rem;
   color: #fff;
   font-size: 1rem;
@@ -113,4 +113,35 @@ p {
 .btn-list:after {
   background-color: #FFAF3DFF;
   background-image: linear-gradient(315deg, #FFAF3DFF 0%, #FFBC83FF 74%);
+}
+
+#info {
+  display: block;
+  max-width: 50%;
+  width: fit-content;
+  position: relative;
+  font-size: 1.5rem;
+  text-align: left;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #FF1B00FF;
+  line-height: 1.25em;
+}
+
+#info span, #info ul {
+  color: #027EFBFF;
+  font-style: italic;
+  font-weight: bold;
+}
+
+@media (max-width: 24rem) {
+  .custom-btn {
+    width: 90%;
+    height: auto;
+    min-height: 3rem;
+  }
+
+  #info {
+    max-width: 100%;
+  }
 }

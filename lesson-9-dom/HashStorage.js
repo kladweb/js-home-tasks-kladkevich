@@ -1,8 +1,8 @@
 'use strict';
 
 function THashStorage() {
-  var storage = {};
   var self = this;
+  var storage = {};
   self.addValue = function (key, value) {
     storage[key] = value;
   };
@@ -18,21 +18,10 @@ function THashStorage() {
     }
   }
   self.getKeys = function () {
-    var keys = []
+    var keys = [];
     for (var key in storage) {
       keys.push(key);
     }
     return keys;
   }
 }
-
-//
-// var drinkStorage = new THashStorage();
-//
-// drinkStorage.addValue('Маргарита', {alco: true, recept: 'смешать'});
-// drinkStorage.addValue('Маргарита2', {alco: true, recept: 'смешать'});
-// drinkStorage.addValue('Маргарита3', {alco: true, recept: 'смешать'});
-//
-// console.log(drinkStorage);
-// console.log(drinkStorage.deleteValue('Маргарита3'));
-// console.log(drinkStorage.deleteValue('Маргарита3'));
