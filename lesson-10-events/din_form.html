@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>din_form</title>
+  </head>
+  <body>
+    <form action="http://fe.it-academy.by/TestForm.php" name="Din_form"></form>
+
+    <script>
+      'use strict';
+      var elements = [
+        {type: 'legend', name: 'Для внесения вашего сайта в каталог, заполните форму:'},
+        {type: 'text', label: 'Разработчики: ', name: 'Developers', size: 65},
+        {type: 'text', label: 'Название сайта: ', name: 'SiteName', size: 63},
+        {type: 'text', label: 'URL сайта: ', name: 'URL', size: 45},
+        {type: 'text', label: 'Дата запуска сайта: ', name: 'DateLaunch', size: 15},
+        {type: 'text', label: 'Посетителей в сутки: ', name: 'VisitorsDay', size: 13},
+        {type: 'text', label: 'E-mail для связи: ', name: 'E-mail', size: 35},
+        {
+          type: 'select',
+          label: 'Рубрика каталога: ',
+          name: 'CatalogCategory',
+          item: ['здоровье', 'домашний уют', 'бытовая техника'],
+          selected: 2
+        },
+        {type: 'radio', label: 'Размещение: ', item: ['бесплатное', 'платное', 'VIP'], name: 'placement'},
+        {type: 'checkbox', label: 'Разрешить отзывы: ', name: 'reviews', value: 'AllowReviews'},
+        {type: 'textarea', label: 'Описание сайта: ', name: 'message', rows: 7, cols: 75},
+        {type: 'submit', value: 'Опубликовать'}
+      ];
+
+      function createForm(fName, fElements) {
+        var form = document.forms[fName];
+        var clone = form.cloneNode(form);
+        var textElement;
+
+        for (var i = 0; i < elements.length; i++) {
+          if (fElements[i].type === 'text') {
+            textElement = createLabelInput(fElements[i]);
+          }
+          if (fElements[i].type === 'select') {
+            textElement = createSelectElement(fElements[i]);
+          }
+          if (fElements[i].type === 'radio') {
+            textElement = createRadio(fElements[i]);
+          }
+          if (fElements[i].type === 'checkbox') {
+            textElement = createCheckbox(fElements[i]);
+          }
+          if (fElements[i].type === 'textarea') {
+            textElement = createTextarea(fElements[i]);
+          }
+          if (fElements[i].type === 'submit') {
+            textElement = createSubmit(fElements[i]);
+          }
+          if (fElements[i].type === 'legend') {
+            textElement = createLegend(fElements[i]);
+          }
+          clone.appendChild(textElement);
+        }
+        var parentNode = form.parentNode;
+        parentNode.replaceChild(clone, form);
+      }
+
+      function createLabelInput(data) {
+        var div = document.createElement('div');
+        var label = createLabel(data);
+        div.appendChild(label);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', data.name);
+        input.setAttribute('size', data.size);
+        div.appendChild(input);
+        return div;
+      }
+
+      function createLabel(data) {
+        var label = document.createElement('label');
+        var text = document.createTextNode(data.label);
+        label.appendChild(text);
+        return label;
+      }
+
+      function createSelectElement(data) {
+        var div = document.createElement('div');
+        var label = createLabel(data);
+        div.appendChild(label);
+        var select = document.createElement('select');
+        select.setAttribute('name', data.name);
+        for (var i = 0; i < data.item.length; i++) {
+          var option = document.createElement('option');
+          option.setAttribute('value', 'option' + i);
+          if (i === data.selected) {
+            option.setAttribute('selected', 'selected');
+          }
+          var text = document.createTextNode(data.item[i]);
+          option.appendChild(text);
+          select.appendChild(option);
+        }
+        div.appendChild(select);
+        return div;
+      }
+
+      function createRadio(data) {
+        var div = document.createElement('div');
+        var label = createLabel(data);
+        div.appendChild(label);
+        for (var i = 0; i < data.item.length; i++) {
+          var radio = document.createElement('input');
+          radio.setAttribute('type', 'radio');
+          radio.setAttribute('name', data.name);
+          radio.setAttribute('value', 'option' + i);
+          var text = document.createTextNode(data.item[i]);
+          div.appendChild(radio);
+          div.appendChild(text);
+        }
+        return div;
+      }
+
+      function createCheckbox(data) {
+        var div = document.createElement('div');
+        var label = createLabel(data);
+        div.appendChild(label);
+        var checkbox = document.createElement('input');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('name', data.name);
+        checkbox.setAttribute('value', data.value);
+        div.appendChild(checkbox);
+        return div;
+      }
+
+      function createTextarea(data) {
+        var div = document.createElement('div');
+        var label = createLabel(data);
+        div.appendChild(label);
+        var br = document.createElement('br');
+        var textarea = document.createElement('textarea');
+        textarea.setAttribute('name', data.name);
+        textarea.setAttribute('rows', data.rows);
+        textarea.setAttribute('cols', data.cols);
+        div.appendChild(br);
+        div.appendChild(textarea);
+        return div;
+      }
+
+      function createSubmit(data) {
+        var submit = document.createElement('input');
+        submit.setAttribute('type', data.type);
+        submit.setAttribute('value', data.value);
+        return submit;
+      }
+
+      function createLegend(data) {
+        var div = document.createElement('div');
+        var legend = document.createElement('legend');
+        var text = document.createTextNode(data.name);
+        var br = document.createElement('br');
+        legend.appendChild(text);
+        div.appendChild(legend);
+        div.appendChild(br);
+        return div;
+      }
+
+      createForm('Din_form', elements);
+
+    </script>
+  </body>
+</html>
