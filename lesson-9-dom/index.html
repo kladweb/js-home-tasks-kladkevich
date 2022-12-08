@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drink Storage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Drink Storage</h1>
+    <p class="hello">Добро пожаловать на страницу напитков!</p>
+    <button class="custom-btn btn-enter">ввод информации о напитке</button>
+    <button class="custom-btn btn-get">получение информации о напитке</button>
+    <button class="custom-btn btn-del">удаление информации о напитке</button>
+    <button class="custom-btn btn-list">перечень всех напитков</button>
+    <div id="info"></div>
+
+    <script src="HashStorage.js"></script>
+
+    <script>
+      'use strict';
+
+      var drinkStorage = new THashStorage();
+
+      var btnEnter = document.querySelector('.btn-enter');
+      var btnGet = document.querySelector('.btn-get');
+      var btnDel = document.querySelector('.btn-del');
+      var btnList = document.querySelector('.btn-list');
+      var contElem = document.getElementById('info');
+
+      btnEnter.addEventListener('click', enterNewDrink);
+      btnGet.addEventListener('click', getDrink);
+      btnDel.addEventListener('click', deleteDrink);
+      btnList.addEventListener('click', listDrink);
+
+      function enterNewDrink() {
+        var name = prompt('Введите название напитка:');
+        if (checkEnter(name)) {
+          contElem.textContent = 'Вы не ввели название напитка. Данные не записаны!';
+          return;
+        }
+        name = nameProcessing(name);
+        if (checkAvailability(name)) {
+          if (!confirm('Напиток с таким названием уже есть в списке! Перезаписать ?')) {
+            return;
+          }
+        }
+        var isAlco = confirm('Напиток является алкогольным ?');
+        var recipe = prompt('Опишите рецепт приготовления и/или состав:');
+        if (checkEnter(recipe)) {
+          if (confirm('Сохранить напиток без рецепта ?')) {
+            recipe = '(отсутствует)';
+          } else {
+            contElem.textContent = 'Данные о напитке "' + name + '" не сохранены!';
+            return;
+          }
+        }
+        var drinkInfo = [isAlco, recipe];
+        drinkStorage.addValue(name, drinkInfo);
+        contElem.innerHTML = 'Данные о напитке <span>\"' + name + '\" </span> записаны!';
+      }
+
+      function getDrink() {
+        if (checkEmpty()) {
+          contElem.textContent = 'Список напитков на данный момент пуст !';
+          return;
+        }
+        var name = prompt('Введите название напитка:');
+        if (checkEnter(name)) {
+          contElem.textContent = 'Вы не ввели информацию!';
+          return;
+        }
+        name = nameProcessing(name);
+        var drinkInfo = drinkStorage.getValue(name);
+        var drinkInfoViev = '';
+        if (!drinkInfo) {
+          contElem.textContent = 'Такого напитка пока нет в хранилище.';
+        } else {
+          drinkInfoViev = '<p>Напиток:  <span>' + name + '</span><br>' +
+            'Алкогольный:  <span>' + (drinkInfo[0] ? 'да' : 'нет') + '</span><br>' +
+            'Рецепт приготовления:  <span>' + drinkInfo[1] + '</span></p>';
+          contElem.innerHTML = drinkInfoViev;
+        }
+      }
+
+      function deleteDrink() {
+        if (checkEmpty()) {
+          contElem.textContent = 'Список напитков на данный момент пуст !';
+          return;
+        }
+        var name = prompt('Введите название напитка:');
+        if (checkEnter(name)) {
+          contElem.textContent = 'Вы не ввели информацию!';
+          return;
+        }
+        name = nameProcessing(name);
+        if (drinkStorage.deleteValue(name)) {
+          contElem.innerHTML = `Информация о напитке <span> \"${name}\" </span> удалена!`;
+        } else {
+          contElem.textContent = `Такого напитка пока нет в хранилище.`;
+        }
+      }
+
+      function listDrink() {
+        if (checkEmpty()) {
+          contElem.textContent = 'Список напитков на данный момент пуст !';
+          return;
+        }
+        var listDrinks = '<p>Список напитков:</p>' + '<ul>';
+        var listDrinksAr = drinkStorage.getKeys();
+        for (var i = 0; i < listDrinksAr.length; i++) {
+          listDrinks += ('<li>' + listDrinksAr[i] + '</li>');
+        }
+        listDrinks += '</ul>';
+        contElem.innerHTML = listDrinks;
+      }
+
+      function checkEmpty() {
+        return (drinkStorage.getKeys().length === 0);
+      }
+
+      function checkEnter(name) {
+        return (name === null || name.trim() === '');
+      }
+
+      function checkAvailability(name) {
+        var listDrinksAr = drinkStorage.getKeys();
+        return listDrinksAr.includes(name);
+      }
+
+      function nameProcessing(name) {
+        name = name.trim();
+        name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+        return name;
+      }
+    </script>
+  </body>
+</html>
