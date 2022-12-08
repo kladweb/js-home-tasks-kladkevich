@@ -108,7 +108,7 @@ function Drag_Start(event) {
     }
 
     if (currentY <= yFrameStart - imageCorrectY + window.scrollY) {
-      currentY = yFrameStart - imageCorrectY;
+      currentY = yFrameStart - imageCorrectY + window.scrollY;
       if (DragShiftY <= 0) {
         DragShiftY = 0;
       } else {
