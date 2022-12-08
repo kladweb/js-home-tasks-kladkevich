@@ -66,12 +66,14 @@ function Drag_Start(event) {
     window.removeEventListener('mousemove', Drag_Move);
     DragImage.style.zIndex = 'auto';
     DragImage.style.cursor = 'grab';
+    document.body.style.overflowY = 'auto';
   }
 
   function Drag_Move(event) {
     event = event || window.event;
     imagePos = DragImage.getBoundingClientRect();
     DragImage.style.zIndex = '100';
+    document.body.style.overflowY = 'hidden';
     currentX = event.clientX - DragShiftX - imageCorrectX;
     currentY = event.clientY - DragShiftY - imageCorrectY;
 
