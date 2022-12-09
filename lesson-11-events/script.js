@@ -10,21 +10,23 @@ var currentY;
 var imagePos; //массив с getBoundingClientRect() для текущей (активной) картинки
 var framePos; //то же для рамки;
 
+window.addEventListener("load", function () {
+  for (var i = (images.length - 1); i >= 0; i--) {
+    var x = images[i].offsetLeft;
+    var y = images[i].offsetTop;
+    images[i].style.cursor = 'grab';
+    images[i].style.left = x + 'px';
+    images[i].style.top = y + 'px';
+    images[i].style.position = 'absolute';
+  }
+});
+
 //Сохраняем в глобальные переменные поправку на margin у картинок. Предполагаем для данной задачи, что margin у всех
 // картинок будет одинаковый, поэтому просто возьмём у первой:
 var imageCorrectX = parseFloat(window.getComputedStyle(images[0]).marginLeft);
 var imageCorrectY = parseFloat(window.getComputedStyle(images[0]).marginTop);
 
 for (var i = (images.length - 1); i >= 0; i--) {
-  var x = images[i].offsetLeft;
-  var y = images[i].offsetTop;
-  images[i].style.cursor = 'grab';
-  images[i].style.left = x + 'px';
-  images[i].style.top = y + 'px';
-}
-
-for (var i = (images.length - 1); i >= 0; i--) {
-  images[i].style.position = 'absolute';
   images[i].addEventListener('mousedown', Drag_Start);
 }
 
