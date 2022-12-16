@@ -1,7 +1,6 @@
 'use strict';
 
 createClock();
-
 startTime();
 
 function createClock() {
@@ -16,7 +15,7 @@ function createClock() {
     base.appendChild(number);
     var numberX = (base.offsetWidth / 2 - number.offsetWidth * 0.8) * Math.sin(i * 30 * Math.PI / 180);
     var numberY = (base.offsetHeight / 2 - number.offsetHeight * 0.8) * Math.cos(i * 30 * Math.PI / 180);
-    // 0.8 - отступ кружков с цифрами от наружной грани часов в долях от размера кружка (т.е. 80%).
+    // 0.8 - отступ центров кружков с цифрами от наружной грани часов в долях от размера кружка (т.е. 80%).
     number.style.left = (base.offsetWidth / 2 - number.offsetWidth / 2) + numberX + 'px';
     number.style.top = (base.offsetHeight / 2 - number.offsetHeight / 2) - numberY + 'px';
   }
