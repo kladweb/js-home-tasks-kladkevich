@@ -2,7 +2,7 @@
 
 const baseRadius = 180; //радиус циферблата
 const numbersBaseRadius = baseRadius * 0.8; //радиус оси цифр циферблата
-const circleRadius = 24; // радиус кружков с цифрами
+const cRadius = 24; // радиус кружков с цифрами
 const arrHour = [8, 80, 'rgba(255, 255, 255, 0.7)']; // толщина, длина и цвет часовой стрелки
 const arrMin = [4, 100, 'rgba(255, 255, 255, 0.7)']; // толщина, длина и цвет минутной стрелки
 const arrSec = [2, 120, 'yellow']; // толщина, длина и цвет секундной стрелки
@@ -19,12 +19,11 @@ setInterval(tickTimer, 1000);
 
 function createCanvas() {
   let canvas = document.createElement('canvas');
-  canvas.id = 'clockcanvas';
+  canvas.id = 'watch';
   canvas.setAttribute('width', baseRadius * 2);
   canvas.setAttribute('height', baseRadius * 2);
   return canvas;
 }
-
 
 function createWatch() {
   drawBase();
@@ -39,7 +38,10 @@ function createWatch() {
 function drawBase() {
   context.beginPath();
   context.arc(baseRadius, baseRadius, baseRadius, 0, Math.PI * 2);
-  context.fillStyle = 'tomato';
+  let grad = context.createLinearGradient(0, 0, 0, baseRadius * 2);
+  grad.addColorStop(0, 'tomato');
+  grad.addColorStop(1, 'crimson');
+  context.fillStyle = grad;
   context.fill();
 }
 
@@ -50,16 +52,19 @@ function drawClockFace() {
     let y = (baseRadius - numbersBaseRadius * Math.cos(angle));
     //рисуем кружки для цифр
     context.beginPath();
-    context.arc(x, y, circleRadius, 0, Math.PI * 2);
-    context.fillStyle = 'crimson';
+    context.arc(x, y, cRadius, 0, Math.PI * 2);
+    let grad = context.createLinearGradient(x, y - cRadius, x, y + cRadius);
+    grad.addColorStop(0, 'crimson');
+    grad.addColorStop(1, 'tomato');
+    context.fillStyle = grad;
     context.fill();
     //рисуем цифры на кружках
     context.fillStyle = '#FFF';
     context.font = 'italic normal 24px Ubuntu';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    //здесь также немного центрируем цифры из-за использования наклонного шрифта:
-    context.fillText(number, x - circleRadius * 0.1, y);
+    //также немного центрируем цифры из-за использования наклонного шрифта, т.е. смещаем влево на величину: cRadius*0.1
+    context.fillText(number + '', x - cRadius * 0.1, y);
   }
 }
 

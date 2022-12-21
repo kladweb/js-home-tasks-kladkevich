@@ -1,7 +1,7 @@
 'use strict';
 const baseRadius = 180; //радиус циферблата
 const numbersBaseRadius = baseRadius * 0.8; //радиус оси цифр циферблата
-const circleRadius = 24; // радиус кружков с цифрами
+const cRadius = 24; // радиус кружков с цифрами
 const dotSize = 6; //размер точки в центре часов
 const wrapper = document.getElementById('wrapper');
 const xmlns = 'http://www.w3.org/2000/svg';
@@ -16,6 +16,7 @@ function createWatch() {
   svg.id = 'base';
   svg.setAttributeNS(null, 'width', baseRadius * 2);
   svg.setAttributeNS(null, 'height', baseRadius * 2);
+  svg.appendChild(createGradients());
   svg.appendChild(createBase());
   svg.appendChild(createClockFace());
   svg.appendChild(createDigitalWatch());
@@ -26,13 +27,38 @@ function createWatch() {
   return svg;
 }
 
+function createGradients() {
+  let defs = document.createElementNS(xmlns, 'defs');
+  defs.appendChild(createLinearGradient('LG1', 'tomato', 'crimson'));
+  defs.appendChild(createLinearGradient('LG2', 'crimson', 'tomato'));
+  return defs;
+
+  function createLinearGradient(nameGradient, startColor, endColor) {
+    let gr = document.createElementNS(xmlns, 'linearGradient');
+    gr.setAttributeNS(null, 'id', nameGradient);
+    gr.setAttributeNS(null, 'x1', '0%');
+    gr.setAttributeNS(null, 'y1', '0%');
+    gr.setAttributeNS(null, 'x2', '0%');
+    gr.setAttributeNS(null, 'y2', '100%');
+    let stop0 = document.createElementNS(xmlns, 'stop');
+    stop0.setAttributeNS(null, 'offset', '0%');
+    stop0.setAttributeNS(null, 'stop-color', startColor);
+    gr.appendChild(stop0);
+    let stop100 = document.createElementNS(xmlns, 'stop');
+    stop100.setAttributeNS(null, 'offset', '100%');
+    stop100.setAttributeNS(null, 'stop-color', endColor);
+    gr.appendChild(stop100);
+    return gr;
+  }
+}
+
 function createBase() {
   let circle = document.createElementNS(xmlns, 'circle');
   circle.setAttributeNS(null, 'cx', baseRadius);
   circle.setAttributeNS(null, 'cy', baseRadius);
   circle.setAttributeNS(null, 'r', baseRadius);
   // circle.setAttributeNS(null, 'stroke', 'tomato');
-  circle.setAttributeNS(null, 'fill', 'tomato');
+  circle.setAttributeNS(null, 'fill', 'url(#LG1)');
   return circle;
 }
 
@@ -52,8 +78,8 @@ function createHourCircle(circleX, circleY) {
   let circle = document.createElementNS(xmlns, 'circle');
   circle.setAttributeNS(null, 'cx', circleX);
   circle.setAttributeNS(null, 'cy', circleY);
-  circle.setAttributeNS(null, 'r', circleRadius);
-  circle.setAttributeNS(null, 'fill', 'crimson');
+  circle.setAttributeNS(null, 'r', cRadius);
+  circle.setAttributeNS(null, 'fill', 'url(#LG2)');
   return circle;
 }
 
@@ -61,7 +87,7 @@ function createHourNumber(numberX, numberY, number) {
   let hourNumber = document.createElementNS(xmlns, 'text');
   hourNumber.appendChild(document.createTextNode(number));
   //так как для стрелочных часов использую наклонный шрифт, то здесь немного сдвинул цифры влево чтобы было красивее:
-  hourNumber.setAttributeNS(null, 'x', numberX - circleRadius * 0.1);
+  hourNumber.setAttributeNS(null, 'x', numberX - cRadius * 0.1);
   hourNumber.setAttributeNS(null, 'y', numberY);
   hourNumber.setAttributeNS(null, 'fill', '#FFF');
   hourNumber.setAttributeNS(null, 'text-anchor', 'middle');
