@@ -1,15 +1,30 @@
 'use strict';
 
-const tennis = document.getElementById('tennis');
+function start() {
+  init();
+  run();
+}
+
+//отрисовываем созданные элементы игры
+function init() {
+  window.tennis = document.getElementById('tennis');
+  board.createBoard();
+  ball.createBall();
+  racket1.createRacket();
+  racket2.createRacket();
+  score.createScore();
+  buttonStart.createButton();
+  winnerTitle.createWinnerTitle();
+}
 
 //создаем поле
 const board = {
-  wightField: 600,
+  widthField: 600,
   heightField: 400,
-  create: function () {
+  createBoard: function () {
     let boardObj = document.createElement('div');
     boardObj.id = 'board';
-    boardObj.style.width = this.wightField + 'px';
+    boardObj.style.width = this.widthField + 'px';
     boardObj.style.height = this.heightField + 'px';
     tennis.appendChild(boardObj);
     this.posX = boardObj.offsetLeft; //сохраним, чтобы потом брать эти величины и сразу пользоваться
@@ -17,60 +32,57 @@ const board = {
     this.sizeBorder = parseFloat(window.getComputedStyle(boardObj).borderWidth);
   }
 }
-board.create();
 
 //создаем шарик
-const ball =
-  {
-    posX: 0,
-    posY: 0,
-    speedX: 0,
-    speedY: 0,
-    size: 30,
-    create: function () {
-      let ballObj = document.createElement('div');
-      ballObj.id = 'ball';
-      ballObj.style.width = this.size + 'px';
-      ballObj.style.height = this.size + 'px';
-      tennis.appendChild(ballObj);
-      this.resetPositionDefault();
-      this.update();
-    },
-    resetPositionDefault: function () {
-      this.posX = board.posX + board.wightField / 2 - this.size / 2;
-      this.posY = board.posY + board.heightField / 2 - this.size / 2;
-      this.speedX = 0;
-      this.speedY = 0;
-    },
-    update: function () {
-      let ballObj = document.getElementById('ball');
-      ballObj.style.left = this.posX + 'px';
-      ballObj.style.top = this.posY + 'px';
-    }
-  };
-ball.create();
+const ball = {
+  posX: 0,
+  posY: 0,
+  speedX: 0,
+  speedY: 0,
+  size: 30,
+  createBall: function () {
+    let ballObj = document.createElement('div');
+    ballObj.id = 'ball';
+    ballObj.style.width = this.size + 'px';
+    ballObj.style.height = this.size + 'px';
+    tennis.appendChild(ballObj);
+    this.resetPositionDefault();
+    this.redrawBall();
+  },
+  resetPositionDefault: function () {
+    this.posX = board.posX + board.widthField / 2 - this.size / 2;
+    this.posY = board.posY + board.heightField / 2 - this.size / 2;
+    this.speedX = 0;
+    this.speedY = 0;
+  },
+  redrawBall: function () {
+    let ballObj = document.getElementById('ball');
+    ballObj.style.left = this.posX + 'px';
+    ballObj.style.top = this.posY + 'px';
+  }
+};
 
-//создаем конструктор для ракеток
+//создаем конструктор для создания ракеток
 function Racket(name) {
   this.posX = 0;
   this.posY = 0;
   this.height = 100;
   this.width = 8;
   this.speedY = 0;
-  this.create = function () {
+  this.createRacket = function () {
     let racketObj = document.createElement('div');
     racketObj.id = (name);
     racketObj.style.width = this.width + 'px';
     racketObj.style.height = this.height + 'px';
     tennis.appendChild(racketObj);
     this.resetPositionDefault();
-    this.update();
+    this.redrawRacket();
   };
   this.resetPositionDefault = function () {
     this.posX = board.posX;
     this.posY = board.posY + board.heightField / 2 - this.height / 2;
   };
-  this.update = function () {
+  this.redrawRacket = function () {
     let racketObj = document.getElementById(name);
     racketObj.style.left = this.posX + 'px';
     racketObj.style.top = this.posY + 'px';
@@ -79,17 +91,13 @@ function Racket(name) {
 
 //создаем ракетку №1 на базе конструктора
 const racket1 = new Racket('racket1');
-racket1.create();
 
-//Создаем ракетку №2 на базе конструктора, заменив функцию определения её дефолтных координат.
-//Думал над вариантом предусмотреть это в конструкторе, создав условие. Но решил оставить конструктор для создания
-// ракеток более чистым.
+//Создаем ракетку №2 на базе конструктора, и сразу заменяем функцию определения её дефолтных координат.
 const racket2 = new Racket('racket2');
 racket2.resetPositionDefault = function () {
-  this.posX = board.posX + board.wightField - this.width;
+  this.posX = board.posX + board.widthField - this.width;
   this.posY = board.posY + board.heightField / 2 - this.height / 2;
 };
-racket2.create();
 
 //Создаем табло со счетом
 const score = {
@@ -105,44 +113,71 @@ const score = {
     this.player1 = 0;
     this.player2 = 0;
   },
-  create: function () {
+  createScore: function () {
     let score = document.createElement('p');
     score.id = 'score';
-    score.style.left = board.posX + board.wightField / 2 + 'px';
-    score.style.top = board.posY + 'px';
     score.appendChild(document.createTextNode('0 : 0'));
     tennis.appendChild(score);
-    this.resetScoreDefault();
+    this.updatePositionScore();
+    this.redrawScore();
   },
-  update: function () {
+  updatePositionScore: function () {
+    let score = document.getElementById('score');
+    score.style.left = board.posX + board.widthField / 2 + 'px';
+    score.style.top = board.posY + 'px';
+  },
+  redrawScore: function () {
     let score = document.getElementById('score');
     score.innerText = this.player1 + ' : ' + this.player2;
   }
 };
-score.create();
 
-//создаем кнопку "СТАРТ!"/. Здесь дилемма: придерживаться ли одинакового подхода к созданию объектов? Так как это
-// просто всего лишь кнопка, то создадим её сразу:
-const buttonStart = document.createElement('button');
-buttonStart.id = ('start');
-buttonStart.style.left = board.posX + 'px';
-buttonStart.style.top = board.posY + 'px';
-buttonStart.appendChild(document.createTextNode('СТАРТ!'));
-tennis.appendChild(buttonStart);
+//создаем кнопку "СТАРТ!"
+const buttonStart = {
+  button: null,
+  createButton: function () {
+    this.button = document.createElement('button');
+    this.button.id = ('start');
+    this.button.appendChild(document.createTextNode('СТАРТ!'));
+    tennis.appendChild(this.button);
+    this.updatePositionButton();
+  },
+  updatePositionButton: function () {
+    this.button.style.left = board.posX + 'px';
+    this.button.style.top = board.posY + 'px';
+  }
+};
 
 //создаем будущую надпись 'WINNER !!!'
-const winner = document.createElement('p');
-winner.id = 'winner';
-winner.appendChild(document.createTextNode(''));
-winner.style.top = board.posY + board.heightField / 2 + 'px';
-tennis.appendChild(winner);
+const winnerTitle = {
+  winner: null,
+  createWinnerTitle: function () {
+    this.winner = document.createElement('p');
+    this.winner.id = 'winner';
+    this.winner.appendChild(document.createTextNode(''));
+    this.winner.style.top = board.posY + board.heightField / 2 + 'px';
+    tennis.appendChild(this.winner);
+  }
+};
+
+//сделаем адаптацию к изменению масштаба, чтобы элементы игры не разъезжались в разные стороны при масштабировании:
+window.addEventListener('resize', updateGlobal);
+
+function updateGlobal() {
+  let boardObj = document.getElementById('board');
+  board.posX = boardObj.offsetLeft;
+  board.posY = boardObj.offsetTop;
+  ball.resetPositionDefault();
+  racket1.resetPositionDefault();
+  racket2.resetPositionDefault();
+  buttonStart.updatePositionButton();
+  score.updatePositionScore();
+}
 
 //Динамика
 
-startGame();
-
-function startGame() {
-  buttonStart.addEventListener('click', startBall);
+function run() {
+  buttonStart.button.addEventListener('click', startBall);
   window.addEventListener("keydown", moveRacket);
   window.addEventListener("keyup", stopRacket);
   setInterval(tick, 10);
@@ -187,12 +222,11 @@ function stopRacket(e) {
 }
 
 function startBall() {
-  score.update();
+  score.redrawScore();
   ball.speedX = Math.floor(Math.random() * 2) * 6 - 3;
   ball.speedY = Math.floor(Math.random() * 5) - 2;
-  let winner = document.getElementById('winner');
-  if (winner != null) {
-    winner.innerText = '';
+  if (winnerTitle.winner != null) {
+    winnerTitle.winner.innerText = '';
   }
 }
 
@@ -221,19 +255,19 @@ function updateBall() {
     racket1.resetPositionDefault();
     racket2.resetPositionDefault();
     score.addScorePlayer2();
-    score.update();
+    score.redrawScore();
   }
   if (checkYPlayer2() && checkHitPlayer2()) {
     ball.speedX = -ball.speedX;
     ball.speedY = Math.floor(Math.random() * 5) - 2;
-    ball.posX = board.posX + board.wightField - ball.size - racket1.width;
+    ball.posX = board.posX + board.widthField - ball.size - racket1.width;
   }
   if (!checkYPlayer2() && checkOutPlayer2()) {
     ball.resetPositionDefault();
     racket1.resetPositionDefault();
     racket2.resetPositionDefault();
     score.addScorePlayer1();
-    score.update();
+    score.redrawScore();
   }
 
   if (ball.posY + ball.size > board.posY + board.heightField + board.sizeBorder) {
@@ -244,7 +278,7 @@ function updateBall() {
     ball.speedY = -ball.speedY;
     ball.posY = board.posY + board.sizeBorder;
   }
-  ball.update();
+  ball.redrawBall();
 }
 
 function checkYPlayer1() {
@@ -264,11 +298,11 @@ function checkYPlayer2() {
 }
 
 function checkHitPlayer2() {
-  return ball.posX > board.posX + board.wightField - ball.size - racket1.width;
+  return ball.posX > board.posX + board.widthField - ball.size - racket1.width;
 }
 
 function checkOutPlayer2() {
-  return ball.posX > board.posX + board.wightField - ball.size;
+  return ball.posX > board.posX + board.widthField - ball.size;
 }
 
 function updateRacket1() {
@@ -282,7 +316,7 @@ function updateRacket1() {
   } else {
     racket1.posY = board.posY + board.heightField - racket1.height + board.sizeBorder;
   }
-  racket1.update();
+  racket1.redrawRacket();
 }
 
 function updateRacket2() {
@@ -296,20 +330,21 @@ function updateRacket2() {
   } else {
     racket2.posY = board.posY + board.heightField - racket2.height + board.sizeBorder;
   }
-  racket2.update();
+  racket2.redrawRacket();
 }
 
 function winPlayer(playerWin) {
-  let winner = document.getElementById('winner');
   if (playerWin === 1) {
-    winner.style.left = board.posX + board.wightField / 4 + 'px';
-    winner.style.color = '#09AA57';
+    winnerTitle.winner.style.left = board.posX + board.widthField / 4 + 'px';
+    winnerTitle.winner.style.color = '#09AA57';
   }
   if (playerWin === 2) {
-    winner.style.left = board.posX + board.wightField * 3 / 4 + 'px';
-    winner.style.color = '#191497';
+    winnerTitle.winner.style.left = board.posX + board.widthField * 3 / 4 + 'px';
+    winnerTitle.winner.style.color = '#191497';
   }
-  winner.innerText = 'WINNER !!!';
+  winnerTitle.winner.innerText = 'WINNER !!!';
   score.player1 = 0;
   score.player2 = 0;
 }
+
+window.addEventListener('load', start);
