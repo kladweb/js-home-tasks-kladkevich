@@ -148,7 +148,7 @@ const buttonStart = {
   }
 };
 
-//создаем будущую надпись 'WINNER !!!'
+//создаем элемент, в которой будет надпись 'WINNER !!!'
 const winnerTitle = {
   winner: null,
   createWinnerTitle: function () {
@@ -343,8 +343,7 @@ function winPlayer(playerWin) {
     winnerTitle.winner.style.color = '#191497';
   }
   winnerTitle.winner.innerText = 'WINNER !!!';
-  score.player1 = 0;
-  score.player2 = 0;
+  score.resetScoreDefault();
 }
 
 window.addEventListener('load', start);
