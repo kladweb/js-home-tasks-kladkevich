@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#tennis {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightgrey;
+}
+
+#board {
+  background-color: #F0EE7E;
+  border: solid #353535;
+  border-width: 2px 0;
+}
+
+#ball {
+  position: absolute;
+  background-color: #F02137;
+  border-radius: 50%;
+}
+
+#racket1,
+#racket2,
+#start,
+#score,
+#winner {
+  position: absolute;
+}
+
+#racket1 {
+  background-color: #09AA57;
+}
+
+#racket2 {
+  background-color: #191497;
+}
+
+#start {
+  padding: 5px 20px;
+  transform: translateY(-120%);
+  outline: none;
+}
+
+#score {
+  display: block;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 46px;
+  outline: none;
+  transform: translate(-50%, -100%);
+}
+
+#winner {
+  font-family: Arial, sans-serif;
+  font-size: 38px;
+  transform: translate(-50%, -50%);
+}
