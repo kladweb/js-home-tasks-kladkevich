@@ -2,7 +2,7 @@
 
 function start() {
   init();
-  run();
+  startGame();
 }
 
 //отрисовываем созданные элементы игры
@@ -176,11 +176,15 @@ function updateGlobal() {
 
 //Динамика
 
-function run() {
+function startGame() {
   buttonStart.button.addEventListener('click', startBall);
   window.addEventListener("keydown", moveRacket);
   window.addEventListener("keyup", stopRacket);
-  setInterval(tick, 10);
+  run();
+}
+
+function run() {
+  window.gameInterval = setInterval(tick, 10);
 }
 
 function moveRacket(e) {
@@ -222,6 +226,12 @@ function stopRacket(e) {
 }
 
 function startBall() {
+  if (gameInterval == null) {
+    run();
+  }
+  ball.resetPositionDefault();
+  racket1.resetPositionDefault();
+  racket2.resetPositionDefault();
   score.redrawScore();
   ball.speedX = Math.floor(Math.random() * 2) * 6 - 3;
   ball.speedY = Math.floor(Math.random() * 5) - 2;
@@ -251,9 +261,10 @@ function updateBall() {
     ball.posX = board.posX + racket1.width;
   }
   if (!checkYPlayer1() && checkOutPlayer1()) {
-    ball.resetPositionDefault();
-    racket1.resetPositionDefault();
-    racket2.resetPositionDefault();
+    clearInterval(gameInterval);
+    window.gameInterval = null;
+    ball.speedX = 0;
+    ball.speedY = 0;
     score.addScorePlayer2();
     score.redrawScore();
   }
@@ -263,9 +274,10 @@ function updateBall() {
     ball.posX = board.posX + board.widthField - ball.size - racket1.width;
   }
   if (!checkYPlayer2() && checkOutPlayer2()) {
-    ball.resetPositionDefault();
-    racket1.resetPositionDefault();
-    racket2.resetPositionDefault();
+    clearInterval(gameInterval);
+    window.gameInterval = null;
+    ball.speedX = 0;
+    ball.speedY = 0;
     score.addScorePlayer1();
     score.redrawScore();
   }
@@ -290,7 +302,7 @@ function checkHitPlayer1() {
 }
 
 function checkOutPlayer1() {
-  return ball.posX < board.posX;
+  return ball.posX < board.posX - ball.speedX;
 }
 
 function checkYPlayer2() {
@@ -302,7 +314,7 @@ function checkHitPlayer2() {
 }
 
 function checkOutPlayer2() {
-  return ball.posX > board.posX + board.widthField - ball.size;
+  return ball.posX > board.posX + board.widthField - ball.size - ball.speedX;
 }
 
 function updateRacket1() {
