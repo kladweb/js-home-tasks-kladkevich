@@ -21,13 +21,15 @@ function init() {
 const board = {
   widthField: 600,
   heightField: 400,
+  posX: 0,
+  posY: 0,
   createBoard: function () {
     let boardObj = document.createElement('div');
     boardObj.id = 'board';
     boardObj.style.width = this.widthField + 'px';
     boardObj.style.height = this.heightField + 'px';
     tennis.appendChild(boardObj);
-    this.posX = boardObj.offsetLeft; //сохраним, чтобы потом брать эти величины и сразу пользоваться
+    this.posX = boardObj.offsetLeft;
     this.posY = boardObj.offsetTop;
     this.sizeBorder = parseFloat(window.getComputedStyle(boardObj).borderWidth);
   }
@@ -161,6 +163,7 @@ const winnerTitle = {
 };
 
 //сделаем адаптацию к изменению масштаба, чтобы элементы игры не разъезжались в разные стороны при масштабировании:
+//(корректная работа адаптации предусмотрена только перед запуском игры)
 window.addEventListener('resize', updateGlobal);
 
 function updateGlobal() {
@@ -168,8 +171,11 @@ function updateGlobal() {
   board.posX = boardObj.offsetLeft;
   board.posY = boardObj.offsetTop;
   ball.resetPositionDefault();
+  ball.redrawBall();
   racket1.resetPositionDefault();
+  racket1.redrawRacket();
   racket2.resetPositionDefault();
+  racket2.redrawRacket();
   buttonStart.updatePositionButton();
   score.updatePositionScore();
 }
